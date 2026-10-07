@@ -3,13 +3,32 @@ import { Router } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
-import { verifyToken } from "../middleware/verifyToken.js";
+import { requireRole, verifyToken } from "../middleware/verifyToken.js";
 const router = Router();
 
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
 const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;
 const ACCESS_TOKEN_EXPIRES = "15m";
 const REFRESH_TOKEN_EXPIRES_DAYS = 7;
+
+router.get("/users", verifyToken, requireRole("admin"), async (req, res) => {
+  try {
+    const query = typeof req.query.q === "string" ? req.query.q.trim() : "";
+    const result = await db.query(
+      `SELECT id, name, username, correo
+       FROM users
+       WHERE $1 = '' OR name ILIKE $2 OR username ILIKE $2 OR correo ILIKE $2
+       ORDER BY name ASC
+       LIMIT 3`,
+      [query, `%${query}%`]
+    );
+
+    return res.status(200).json({ users: result.rows });
+  } catch (error) {
+    console.error("Error en GET /auth/users:", error);
+    return res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
 
 // Genera un hash del refresh token para guardarlo en DB
 function hashToken(token) {
@@ -349,4 +368,3 @@ router.put("/:id", verifyToken, async (req, res) => {
 
 
 export default router;
-

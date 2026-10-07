@@ -5,6 +5,7 @@ import { initDB } from "./models/index.js";
 import ControllerUser from "./routes/ControllerUser.js";
 import ControllerProyectoUsuario from "./routes/ControllerProyectoUsuario.js";
 import ControllerArchivoProyecto from "./routes/ControllerArchivoProyecto.js";
+import ControllerServicios from "./routes/ControllerServicios.js";
 
 const app = express();
 const port = 3000;
@@ -26,6 +27,7 @@ app.use(cookieParser());
 app.use("/api/auth", ControllerUser);
 app.use("/api/proyecto-usuario", ControllerProyectoUsuario);
 app.use("/api/archivos", ControllerArchivoProyecto);
+app.use("/api/servicios", ControllerServicios);
 
 // Iniciar el servidor
 const serverRun = async () => {
