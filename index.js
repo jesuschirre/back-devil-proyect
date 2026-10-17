@@ -6,6 +6,7 @@ import ControllerUser from "./routes/ControllerUser.js";
 import ControllerProyectoUsuario from "./routes/ControllerProyectoUsuario.js";
 import ControllerArchivoProyecto from "./routes/ControllerArchivoProyecto.js";
 import ControllerServicios from "./routes/ControllerServicios.js";
+import ControllerArticulo from "./routes/ControllerArticulo.js";
 
 const app = express();
 const port = 3000;
@@ -28,6 +29,7 @@ app.use("/api/auth", ControllerUser);
 app.use("/api/proyecto-usuario", ControllerProyectoUsuario);
 app.use("/api/archivos", ControllerArchivoProyecto);
 app.use("/api/servicios", ControllerServicios);
+app.use("/api/articulos", ControllerArticulo);
 
 // Iniciar el servidor
 const serverRun = async () => {

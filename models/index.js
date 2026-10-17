@@ -5,6 +5,7 @@ import { TProyectoUsuario } from "./proyectoUsuario.js";
 import { TArchivosProyecto } from "./archivoProyecto.js";
 import { TRefreshTokens } from "./refreshToken.js";
 import { TServicios } from "./servicios.js";
+import { TArticulo } from "./articulo.js";
 
 export const initDB = async () => {
     try {
@@ -16,6 +17,7 @@ export const initDB = async () => {
         await TArchivosProyecto();
         await TRefreshTokens();
         await TServicios();
+        await TArticulo();
         console.log("✅ Todas las tablas fueron creadas o verificadas con éxito.");
     } catch (error) {
         console.error("❌ Error durante la inicialización de la base de datos:", error);
